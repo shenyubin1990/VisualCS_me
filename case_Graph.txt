@@ -1,0 +1,6 @@
+4
+
+Infinity 1 2 Infinity
+-1 Infinity 3 2.5
+2 3 Infinity Infinity
+Infinity 2.5 Infinity Infinity
