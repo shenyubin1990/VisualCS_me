@@ -94,10 +94,7 @@ public class PAppletGraphDisplayer extends PApplet {
 		if(Visualize.start){
 		 	
 		 	Visualize.start=false;
-//		 	MergeSort mergedata = new MergeSort(this);
-//			interact();
-//			mergedata.mergeSort();
-		 	//save("Bellmanford_imagequestion_"+Serial_number.serialno()+".png");
+		 	save("MergeSort_imagequestion_"+Serial_number.serialno()+".png");
 	    	Thread t = new Thread() {
 				public void run() {
 					//delay(1000);
@@ -117,7 +114,7 @@ public class PAppletGraphDisplayer extends PApplet {
 		}
  
 		if(Visualize.terminate){
-		     //save("Bellmanford_imagesolution_"+Serial_number.serialno()+".png" );
+		     save("Bellmanford_imagesolution_"+Serial_number.serialno()+".png" );
 		     Visualize.terminate=false;
 		     
 		     if(Serial_number.increment()>=required_num){

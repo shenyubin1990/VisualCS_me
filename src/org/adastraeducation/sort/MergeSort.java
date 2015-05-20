@@ -1,87 +1,26 @@
 package org.adastraeducation.sort;
 
 import org.adastraeducation.util.Generate_random_number;
+import org.adastraeducation.util.SetArray;
+
 import processing.core.PApplet;
 
 public class MergeSort {
 	public int[] data;
 	public ArrayDisplayer x;
-	//public int from, to;
-	PApplet parent; // The parent PApplet that we will render ourselves onto
-	int size = 10;
+	public static int arrayLength = 10;
 	
-	public MergeSort(int size) {
-		data = new int[size];
-		for (int i = 0; i < size; i++)
-			data[i] = Generate_random_number.RandomInteger(0, 99);
-	}
 	public MergeSort(ArrayDisplayer a) {
 		this.x = a; 
 	}
-	
-	MergeSort(PApplet p) {
-		parent = p;
-		data = new int[size];
-		for (int i = 0; i < size; i++)
-			data[i] = Generate_random_number.RandomInteger(0, 99);
-	}
+
 	public static void main(String[] args) {
 		//int[] data = new int[] { 5, 3, 6, 2, 1, 9, 4, 8, 7 };
-		MergeSort a = new MergeSort(10);
-		a.print(a.data);
-		a.mergeSort(a.data);
-		System.out.println("排序后的数组：");
-		a.print(a.data);
-	}
-
-//	public void mergeSort(SortDisplayer x) {
-//		sort(0, x.data.length - 1);
-//	}
-	public void mergeSort() {
-		sort(0, data.length - 1);
+		SetArray randomArray = new SetArray(arrayLength); 
+		MergeSort a = new MergeSort(new TextArrayDisplayer(randomArray.data));
+		a.sort(0, arrayLength-1);
 	}
 	
-	public void mergeSort(int[] data) {
-		sort(0, data.length - 1);
-	}
-	
-	// Draw 
-	void display(int left, int right) {
-//		parent.fill(255,100);
-//		parent.noStroke();
-		parent.textSize(32);
-		for (int x_axis = 0; x_axis < 10; x_axis++) {
-			parent.fill(255);
-			parent.rect(55+56*x_axis, 200, 56, 56);
-    		if (x_axis >= left &&x_axis <= right) {
-    			parent.fill(100);
-    			parent.text(data[x_axis], 45+56*x_axis, 210);	
-    		} else {
-    			parent.fill(200);
-    			parent.text(data[x_axis], 45+56*x_axis, 210);	
-    		}
-    	}
-		parent.redraw();
-		parent.delay(2000);
-	}
-	void displayC(int left, int right) {
-//		parent.fill(255,100);
-//		parent.noStroke();
-		parent.textSize(32);
-		for (int x_axis = 0; x_axis < 10; x_axis++) {
-			parent.fill(255);
-			parent.rect(55+56*x_axis, 200, 56, 56);
-    		if (x_axis >= left &&x_axis <= right) {
-    			parent.fill(204, 102, 0);
-    			parent.text(data[x_axis], 45+56*x_axis, 210);	
-    		} else {
-    			parent.fill(200);
-    			parent.text(data[x_axis], 45+56*x_axis, 210);	
-    		}
-    	}
-		parent.redraw();
-		parent.delay(2000);
-	}
 	public void sort(int left, int right) {
 		if (left >= right)
 			return;
