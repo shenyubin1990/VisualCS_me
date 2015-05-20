@@ -88,20 +88,20 @@ public class MergeSort {
 		// 找出中间索引
 		int center = (left + right) / 2;
 		// 对左边数组进行递归
-		//x.setHighlightVertex(left, center, false);
-		display(left, center);
+		x.setHighlightVertex(left, center, false);
+		//display(left, center);
 		sort(left, center);
-		//x.setHighlightVertex(center+1, right, false);
+		x.setHighlightVertex(center+1, right, false);
 		// 对右边数组进行递归
-		display(center+1, right);
+		//display(center+1, right);
 		sort(center + 1, right);
 		
 		// 合并
-		merge(data, left, center, right);
-		//x.setHighlightVertex(left, right, true);
-		displayC(left, right);
-		//print(x.data);
-		print(data);
+		merge(x, left, center, right);
+		x.setHighlightVertex(left, right, true);
+		//displayC(left, right);
+		print(x.data);
+		//print(data);
 	}
 
 	public void merge(int[] data, int left, int center, int right) {

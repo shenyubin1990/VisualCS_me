@@ -4,17 +4,17 @@ import org.adastraeducation.util.SetArray;
 
 
 public abstract class ArrayDisplayer implements ArrayObserver {
-	public SetArray data;
+	public int[] data;
 	protected int[] highlightvertex;// the main vertex
 	protected int[] highlightvertex2;  // the iterate according to main vertex
 	
 //	protected int[] highlightedge;
 	
-	public ArrayDisplayer(SetArray data2){
+	public ArrayDisplayer(int[] data2){
 			this.data=data2;
 			
-			highlightvertex=new int[data2.len];
-			highlightvertex2=new int[data2.len];
+			highlightvertex=new int[data2.length];
+			highlightvertex2=new int[data2.length];
 			
 			for(int i=0;i<highlightvertex.length;i++){
 				highlightvertex[i]=0;
@@ -22,6 +22,7 @@ public abstract class ArrayDisplayer implements ArrayObserver {
 			}
 			
 	}
+
 	
 	
 //	public int getHighlightVertex2(int v){

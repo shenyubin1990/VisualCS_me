@@ -20,11 +20,11 @@ public class PAppletGraphDisplayer extends PApplet {
 	private static final long serialVersionUID = 1L;
 //	private MergeSort mergedata;
 	private int required_num = 1;
-	private int delaytime = 100;
+	private int delaytime = 1000;
 	private int arrayLength = 10;
 	private boolean interactive=true;
 	private ArrayDisplayer displayer;
-	private SetArray data;
+	private SetArray randomArray;
 	private void interact(){
 		if(!interactive)
 			return;
@@ -33,7 +33,7 @@ public class PAppletGraphDisplayer extends PApplet {
 			delay(delaytime);
 		}	
 	}
-	public void setData(SetArray data2){
+	public void setData(int[] data2){
 		displayer=new ArrayDisplayer(data2){								    	
 			public void setHighlightVertex(int start,int end, boolean flag){          
 				if (flag) { 
@@ -52,11 +52,11 @@ public class PAppletGraphDisplayer extends PApplet {
 	}
 
 	public void setup() {
-		data = new SetArray(arrayLength);
+		randomArray = new SetArray(arrayLength);
 		//data = new int[10];
 //		for (int i = 0; i < data.length; i++)
 //			data[i] = Generate_random_number.RandomInteger(0, 99);
-		setData(data);
+		setData(randomArray.data);
 		//mergedata = new MergeSort(10);
 		size(600,600);
     	//noStroke();
@@ -89,7 +89,7 @@ public class PAppletGraphDisplayer extends PApplet {
 
     		
     		//delay(100);
-    	//}
+    	}
         
 		if(Visualize.start){
 		 	
@@ -101,13 +101,14 @@ public class PAppletGraphDisplayer extends PApplet {
 	    	Thread t = new Thread() {
 				public void run() {
 					//delay(1000);
-					//MergeSort mergedata = new MergeSort(displayer);
+					MergeSort mergedata = new MergeSort(displayer);
+					mergedata.sort(0, arrayLength-1);
 //					MergeSort mergedata = new MergeSort(this);
 //					interact();
 //					mergedata.sort(0, 9);
-					mergedata.display(0, 9);
-					delay(2000);
-					mergedata.mergeSort();
+//					mergedata.display(0, 9);
+//					delay(2000);
+//					mergedata.mergeSort();
 					//repaint();
 				}
 			};
