@@ -7,6 +7,7 @@ package org.adastraeducation.sort;
 
 import org.adastraeducation.util.Generate_random_number;
 import org.adastraeducation.util.Serial_number;
+import org.adastraeducation.util.SetArray;
 import org.adastraeducation.visualize.Visualize;
 
 import processing.core.PApplet;
@@ -17,12 +18,13 @@ public class PAppletGraphDisplayer extends PApplet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private MergeSort mergedata;
+//	private MergeSort mergedata;
 	private int required_num = 1;
-	private int delaytime = 1000;
+	private int delaytime = 100;
+	private int arrayLength = 10;
 	private boolean interactive=true;
-	private SortDisplayer displayer;
-	
+	private ArrayDisplayer displayer;
+	private SetArray data;
 	private void interact(){
 		if(!interactive)
 			return;
@@ -31,8 +33,8 @@ public class PAppletGraphDisplayer extends PApplet {
 			delay(delaytime);
 		}	
 	}
-	public void setData(int[] g){
-		displayer=new SortDisplayer(g){								    	
+	public void setData(SetArray data2){
+		displayer=new ArrayDisplayer(data2){								    	
 			public void setHighlightVertex(int start,int end, boolean flag){          
 				if (flag) { 
 					for (int v = start; v < end+1; v++)
@@ -50,9 +52,10 @@ public class PAppletGraphDisplayer extends PApplet {
 	}
 
 	public void setup() {
-		int[] data = new int[10];
-		for (int i = 0; i < data.length; i++)
-			data[i] = Generate_random_number.RandomInteger(0, 99);
+		data = new SetArray(arrayLength);
+		//data = new int[10];
+//		for (int i = 0; i < data.length; i++)
+//			data[i] = Generate_random_number.RandomInteger(0, 99);
 		setData(data);
 		//mergedata = new MergeSort(10);
 		size(600,600);
@@ -62,27 +65,27 @@ public class PAppletGraphDisplayer extends PApplet {
     	fill(255);
     	//smooth();
     	noLoop();
-	 	mergedata = new MergeSort(this);
+	 	//mergedata = new MergeSort(this);
     }
     public void draw() {    
     	rectMode(CENTER);
     	int i = 0;
-    	//for (int x_axis = 0; x_axis < 10; x_axis++) {
-//    		fill(255);
-//    		rect(55+56*x_axis, 200, 56, 56);
-//    		textSize(32);
+    	for (int x_axis = 0; x_axis < 10; x_axis++) {
+    		fill(255);
+    		rect(55+56*x_axis, 200, 56, 56);
+    		textSize(32);
     		
     	
-//    		if (displayer.highlightvertex[x_axis] == 1) {
-//    			fill(100);
-//    			text(displayer.data[x_axis], 45+56*x_axis, 210);	
-//    		} else if (displayer.highlightvertex[x_axis] == 0){
-//    			fill(200);
-//    			text(displayer.data[x_axis], 45+56*x_axis, 210);
-//    		} else {
-//    			fill(204, 102, 0);
-//    			text(displayer.data[x_axis], 45+56*x_axis, 210);
-//    		}
+    		if (displayer.highlightvertex[x_axis] == 1) {
+    			fill(100);
+    			text(displayer.data[x_axis], 45+56*x_axis, 210);	
+    		} else if (displayer.highlightvertex[x_axis] == 0){
+    			fill(200);
+    			text(displayer.data[x_axis], 45+56*x_axis, 210);
+    		} else {
+    			fill(204, 102, 0);
+    			text(displayer.data[x_axis], 45+56*x_axis, 210);
+    		}
 
     		
     		//delay(100);

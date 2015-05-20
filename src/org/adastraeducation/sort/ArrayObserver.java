@@ -2,7 +2,7 @@ package org.adastraeducation.sort;
 
 
 
-public interface SortObserver{
+public interface ArrayObserver{
 	
 	//public void display();   //once loaded it would graphically show the image
 		

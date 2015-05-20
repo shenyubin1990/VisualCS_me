@@ -5,7 +5,7 @@ import processing.core.PApplet;
 
 public class MergeSort {
 	public int[] data;
-	public SortDisplayer x;
+	public ArrayDisplayer x;
 	//public int from, to;
 	PApplet parent; // The parent PApplet that we will render ourselves onto
 	int size = 10;
@@ -15,7 +15,7 @@ public class MergeSort {
 		for (int i = 0; i < size; i++)
 			data[i] = Generate_random_number.RandomInteger(0, 99);
 	}
-	public MergeSort(SortDisplayer a) {
+	public MergeSort(ArrayDisplayer a) {
 		this.x = a; 
 	}
 	
@@ -135,7 +135,7 @@ public class MergeSort {
 		}
 	}
 	
-	public void merge(SortDisplayer x, int left, int center, int right) {
+	public void merge(ArrayDisplayer x, int left, int center, int right) {
 		// 临时数组
 		int[] tmpArr = new int[x.data.length];
 		// 右数组第一个元素索引
