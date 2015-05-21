@@ -1,9 +1,17 @@
 package org.adastraeducation.sort;
 
-import org.adastraeducation.util.Generate_random_number;
-import org.adastraeducation.util.SetArray;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 
-import processing.core.PApplet;
+import org.adastraeducation.util.Generate_random_number;
+import org.adastraeducation.util.Serial_number;
+import org.adastraeducation.util.SetArray;
+import org.adastraeducation.visualize.Visualize;
 
 public class MergeSort {
 	public int[] data;
@@ -28,19 +36,30 @@ public class MergeSort {
 		int center = (left + right) / 2;
 		// 对左边数组进行递归
 		x.setHighlightVertex(left, center, false);
-		//display(left, center);
 		sort(left, center);
 		x.setHighlightVertex(center+1, right, false);
 		// 对右边数组进行递归
-		//display(center+1, right);
 		sort(center + 1, right);
 		
 		// 合并
 		merge(x, left, center, right);
 		x.setHighlightVertex(left, right, true);
-		//displayC(left, right);
 		print(x.data);
-		//print(data);
+		
+		try{
+//			PrintStream out = new PrintStream(new FileOutputStream("MergeSort_textsoulution_"+Serial_number.serialno()+".txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("MergeSort_textsoulution_"+Serial_number.serialno()+".txt"), true));
+
+			for (int i = 0; i < x.data.length; i++) {
+				writer.write(x.data[i] + "\t");
+			}
+			writer.write("\r\n");
+		     
+			writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}    
 	}
 
 	public void merge(int[] data, int left, int center, int right) {
@@ -110,6 +129,10 @@ public class MergeSort {
 			System.out.print(data[i] + "\t");
 		}
 		System.out.println();
+	}
+	
+	public void finish() {
+		Visualize.terminate=true;
 	}
 
 }

@@ -19,8 +19,8 @@ public class PAppletGraphDisplayer extends PApplet {
 	 */
 	private static final long serialVersionUID = 1L;
 //	private MergeSort mergedata;
-	private int required_num = 1;
-	private int delaytime = 1000;
+	private int required_num = 5;
+	private int delaytime = 10;
 	private int arrayLength = 10;
 	private boolean interactive=true;
 	private ArrayDisplayer displayer;
@@ -53,19 +53,14 @@ public class PAppletGraphDisplayer extends PApplet {
 
 	public void setup() {
 		randomArray = new SetArray(arrayLength);
-		//data = new int[10];
-//		for (int i = 0; i < data.length; i++)
-//			data[i] = Generate_random_number.RandomInteger(0, 99);
 		setData(randomArray.data);
-		//mergedata = new MergeSort(10);
 		size(600,600);
     	//noStroke();
     	background(255);
     	//fill(0, 102, 153, 204);
     	fill(255);
     	//smooth();
-    	noLoop();
-	 	//mergedata = new MergeSort(this);
+    	//noLoop();
     }
     public void draw() {    
     	rectMode(CENTER);
@@ -94,19 +89,12 @@ public class PAppletGraphDisplayer extends PApplet {
 		if(Visualize.start){
 		 	
 		 	Visualize.start=false;
-		 	save("MergeSort_imagequestion_"+Serial_number.serialno()+".png");
+		 	save("src\\Image Question Folder\\MergeSort_imagequestion_"+Serial_number.serialno()+".png");
 	    	Thread t = new Thread() {
 				public void run() {
-					//delay(1000);
 					MergeSort mergedata = new MergeSort(displayer);
 					mergedata.sort(0, arrayLength-1);
-//					MergeSort mergedata = new MergeSort(this);
-//					interact();
-//					mergedata.sort(0, 9);
-//					mergedata.display(0, 9);
-//					delay(2000);
-//					mergedata.mergeSort();
-					//repaint();
+					mergedata.finish();
 				}
 			};
 			
@@ -114,7 +102,7 @@ public class PAppletGraphDisplayer extends PApplet {
 		}
  
 		if(Visualize.terminate){
-		     save("Bellmanford_imagesolution_"+Serial_number.serialno()+".png" );
+		     save("src\\Image Solution Folder\\MergeSort_imagesolution_"+Serial_number.serialno()+".png" );
 		     Visualize.terminate=false;
 		     
 		     if(Serial_number.increment()>=required_num){
