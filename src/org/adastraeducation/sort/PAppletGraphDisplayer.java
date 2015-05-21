@@ -19,8 +19,9 @@ public class PAppletGraphDisplayer extends PApplet {
 	 */
 	private static final long serialVersionUID = 1L;
 //	private MergeSort mergedata;
-	private int required_num = 5;
-	private int delaytime = 10;
+	private String required_algorithm = "MergeSort";
+	private int required_num = 1;
+	private int delaytime = 2000;
 	private int arrayLength = 10;
 	private boolean interactive=true;
 	private ArrayDisplayer displayer;
@@ -35,18 +36,12 @@ public class PAppletGraphDisplayer extends PApplet {
 	}
 	public void setData(int[] data2){
 		displayer=new ArrayDisplayer(data2){								    	
-			public void setHighlightVertex(int start,int end, boolean flag){          
-				if (flag) { 
-					for (int v = start; v < end+1; v++)
-						displayer.highlightvertex[v]=2;
-				} else {
-					for (int v = start; v < 10; v++)
-						displayer.highlightvertex[v]=0;
-					for (int v = start; v < end+1; v++)
-						highlightvertex[v]=1;	
-				}
+			public void setHighlightVertex(int position, int color){          
+				highlightvertex[position]=color;
+//				interact();
+			}
+			public void display() {
 				interact();
-				//delay(1000);
 			}
 		};
 	}
@@ -64,12 +59,14 @@ public class PAppletGraphDisplayer extends PApplet {
     }
     public void draw() {    
     	rectMode(CENTER);
-    	int i = 0;
+    	clear();
+    	background(255);
+    	fill(255);
+
     	for (int x_axis = 0; x_axis < 10; x_axis++) {
     		fill(255);
     		rect(55+56*x_axis, 200, 56, 56);
     		textSize(32);
-    		
     	
     		if (displayer.highlightvertex[x_axis] == 1) {
     			fill(100);
@@ -82,37 +79,91 @@ public class PAppletGraphDisplayer extends PApplet {
     			text(displayer.data[x_axis], 45+56*x_axis, 210);
     		}
 
-    		
+    		if (displayer.highlightvertex2[x_axis] == 1) {
+    			fill(255);
+        		rect(55+56*x_axis, 400, 56, 56);
+        		textSize(32);
+        		if (x_axis < displayer.tempArr.length) {
+	        		fill(100);
+	    			text(displayer.tempArr[x_axis], 45+56*x_axis, 410);
+    			}	
+    		} 
+    		if (displayer.left != -1) {
+    			fill(100);
+    			line(55+56*displayer.left, 270, 55+56*displayer.left, 330);
+    		}
+    		if (displayer.right != -1) {
+    			fill(100);
+    			line(55+56*displayer.right, 270, 55+56*displayer.right, 330);
+    		}
     		//delay(100);
     	}
         
 		if(Visualize.start){
+			Visualize.start=false;
+			switch (required_algorithm) {
+		 	case "MergeSort":
+		 		save("src\\Image Question Folder\\MergeSort_imagequestion_"+Serial_number.serialno()+".png");
+		    	Thread merge = new Thread() {
+					public void run() {
+						MergeSort mergedata = new MergeSort(displayer);
+						mergedata.start();
+						mergedata.sort(0, arrayLength-1);
+						mergedata.finish();
+					}
+				};
+				merge.start();
+		 		break;
+		 	case "HeapSort":
+		 		save("src\\Image Question Folder\\HeapSort_imagequestion_"+Serial_number.serialno()+".png");
+		    	Thread heap = new Thread() {
+					public void run() {
+						HeapSort heapdata = new HeapSort(displayer);
+						heapdata.start();
+						heapdata.heapSort();
+						heapdata.finish();
+					}
+				};
+				heap.start();
+		 		break;
+		 	default:
+		 		break;
+		 	}
 		 	
-		 	Visualize.start=false;
-		 	save("src\\Image Question Folder\\MergeSort_imagequestion_"+Serial_number.serialno()+".png");
-	    	Thread t = new Thread() {
-				public void run() {
-					MergeSort mergedata = new MergeSort(displayer);
-					mergedata.sort(0, arrayLength-1);
-					mergedata.finish();
-				}
-			};
-			
-			t.start();
-		}
+		 }
  
 		if(Visualize.terminate){
-		     save("src\\Image Solution Folder\\MergeSort_imagesolution_"+Serial_number.serialno()+".png" );
-		     Visualize.terminate=false;
+			switch (required_algorithm) {
+			case "MergeSort":
+				save("src\\Image Solution Folder\\MergeSort_imagesolution_"+Serial_number.serialno()+".png" );
+			    Visualize.terminate=false;
+			     
+			    if(Serial_number.increment()>=required_num){
+			     	exit();
+			    }
+			    else
+			    {
+			    	setup();
+			    	Visualize.start=true;
+			    }
+				break;
+			case "HeapSort":
+				save("src\\Image Solution Folder\\HeapSort_imagesolution_"+Serial_number.serialno()+".png" );
+			    Visualize.terminate=false;
+			     
+			    if(Serial_number.increment()>=required_num){
+			     	exit();
+			    }
+			    else
+			    {
+			    	setup();
+			    	Visualize.start=true;
+			    }
+				break;
+			default:
+				break;
+			}
 		     
-		     if(Serial_number.increment()>=required_num){
-		     	exit();
-		     }
-		     else
-		     {
-		     	setup();
-		     	Visualize.start=true;
-		     }
 		 	
 		}
 	}

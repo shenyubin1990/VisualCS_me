@@ -8,7 +8,13 @@ public class TextArrayDisplayer extends ArrayDisplayer{
 	}
 
 	@Override
-	public void setHighlightVertex(int start, int end, boolean flag) {
+	public void setHighlightVertex(int position, int color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void display() {
 		// TODO Auto-generated method stub
 		
 	}
