@@ -8,7 +8,7 @@ public abstract class GraphDisplayer implements GraphObserver {
 	
 	protected int[] highlightedge;
 	
-	public GraphDisplayer(Graph g){                                                              
+	public GraphDisplayer(Graph g){
 			this.g=g;
 			int v=g.getV();
 			

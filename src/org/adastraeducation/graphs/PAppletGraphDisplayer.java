@@ -28,7 +28,7 @@ public class PAppletGraphDisplayer extends PApplet {
 	float r;
 	private int v;   //number of vertices
 	private boolean interactive=true;
-	private int required_num =1;
+	private int required_num =10;
 	
 //	PAppletGraphDisplayer(int drawNumber){
 //		required_num = drawNumber;
@@ -162,7 +162,7 @@ public class PAppletGraphDisplayer extends PApplet {
         	Visualize.start=false;
         	
         	save("Bellmanford_imagequestion_"+Serial_number.serialno()+".png");
-        	System.out.println("1");
+    		
     		Thread t = new Thread() {
     			public void run() {
     				BellmanFord b = new BellmanFord(displayer);
