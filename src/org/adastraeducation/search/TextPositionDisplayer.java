@@ -1,13 +1,12 @@
-package org.adastraeducation.sort;
+package org.adastraeducation.search;
 
-public class TextArrayDisplayer extends ArrayDisplayer{
+public class TextPositionDisplayer extends PositionDisplayer{
 
-	public TextArrayDisplayer(int[] data2) {
+	public TextPositionDisplayer(int[] data2) {
 		super(data2);
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public void setHighlightVertex(int position, int color) {
 		// TODO Auto-generated method stub
 		
@@ -20,9 +19,9 @@ public class TextArrayDisplayer extends ArrayDisplayer{
 	}
 
 	@Override
-	public void setHighlightVertex2(int position, int color) {
+	public float func(float position) {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 	
 }

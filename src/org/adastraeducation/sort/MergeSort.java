@@ -64,7 +64,7 @@ public class MergeSort {
 	public void textSolution() {
 		try{
 //			PrintStream out = new PrintStream(new FileOutputStream("MergeSort_textsoulution_"+Serial_number.serialno()+".txt"));
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("MergeSort_textsoulution_"+Serial_number.serialno()+".txt"), true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("..\\MergeSort_textsoulution_"+Serial_number.serialno()+".txt"), true));
 
 			for (int i = 0; i < x.data.length; i++) {
 				writer.write(x.data[i] + "\t");
@@ -90,11 +90,9 @@ public class MergeSort {
 		x.left = left;
 		int tmp = left;
 		
-		for (int i = 0; i < x.data.length; i++)
-			x.highlightvertex2[i] = 0;
+
 		for (int i = left; i <= right; i++)
-			x.highlightvertex2[i] = 1;
-		print(x.highlightvertex2);
+			x.setHighlightVertex2(i, 1);
 		
 		while (x.left <= center && x.right <= right) {
 			// 从两个数组中取出最小的放入临时数组
@@ -128,6 +126,9 @@ public class MergeSort {
 		while (tmp <= right) {
 			x.data[tmp] = x.tempArr[tmp++];
 		}
+		
+		for (int i = 0; i < x.data.length; i++)
+			x.setHighlightVertex2(i, 0);
 	}
 
 	public void print(int[] data) {
@@ -138,7 +139,7 @@ public class MergeSort {
 	}
 	public void start() {
 		try {
-			File file = new File("MergeSort_textsoulution_"+Serial_number.serialno()+".txt");
+			File file = new File("..\\MergeSort_textsoulution_"+Serial_number.serialno()+".txt");
 			if(!file.exists())
 				file.createNewFile();
 			else 

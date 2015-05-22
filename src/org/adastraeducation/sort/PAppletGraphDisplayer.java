@@ -21,7 +21,7 @@ public class PAppletGraphDisplayer extends PApplet {
 //	private MergeSort mergedata;
 	private String required_algorithm = "MergeSort";
 	private int required_num = 1;
-	private int delaytime = 2000;
+	private int delaytime = 1000;
 	private int arrayLength = 10;
 	private boolean interactive=true;
 	private ArrayDisplayer displayer;
@@ -43,6 +43,11 @@ public class PAppletGraphDisplayer extends PApplet {
 			public void display() {
 				interact();
 			}
+			@Override
+			public void setHighlightVertex2(int position, int color) {
+				// TODO Auto-generated method stub
+				highlightvertex2[position]=color;
+			}
 		};
 	}
 
@@ -63,7 +68,7 @@ public class PAppletGraphDisplayer extends PApplet {
     	background(255);
     	fill(255);
 
-    	for (int x_axis = 0; x_axis < 10; x_axis++) {
+    	for (int x_axis = 0; x_axis < arrayLength; x_axis++) {
     		fill(255);
     		rect(55+56*x_axis, 200, 56, 56);
     		textSize(32);
@@ -103,10 +108,11 @@ public class PAppletGraphDisplayer extends PApplet {
 			Visualize.start=false;
 			switch (required_algorithm) {
 		 	case "MergeSort":
-		 		save("src\\Image Question Folder\\MergeSort_imagequestion_"+Serial_number.serialno()+".png");
+		 		save("..\\Image Question Folder\\MergeSort_imagequestion_"+Serial_number.serialno()+".png");
 		    	Thread merge = new Thread() {
 					public void run() {
 						MergeSort mergedata = new MergeSort(displayer);
+						delay(delaytime);
 						mergedata.start();
 						mergedata.sort(0, arrayLength-1);
 						mergedata.finish();
@@ -115,10 +121,11 @@ public class PAppletGraphDisplayer extends PApplet {
 				merge.start();
 		 		break;
 		 	case "HeapSort":
-		 		save("src\\Image Question Folder\\HeapSort_imagequestion_"+Serial_number.serialno()+".png");
+		 		save("..\\Image Question Folder\\HeapSort_imagequestion_"+Serial_number.serialno()+".png");
 		    	Thread heap = new Thread() {
 					public void run() {
 						HeapSort heapdata = new HeapSort(displayer);
+						delay(delaytime);
 						heapdata.start();
 						heapdata.heapSort();
 						heapdata.finish();
@@ -135,7 +142,7 @@ public class PAppletGraphDisplayer extends PApplet {
 		if(Visualize.terminate){
 			switch (required_algorithm) {
 			case "MergeSort":
-				save("src\\Image Solution Folder\\MergeSort_imagesolution_"+Serial_number.serialno()+".png" );
+				save("..\\Image Solution Folder\\MergeSort_imagesolution_"+Serial_number.serialno()+".png" );
 			    Visualize.terminate=false;
 			     
 			    if(Serial_number.increment()>=required_num){
@@ -148,7 +155,7 @@ public class PAppletGraphDisplayer extends PApplet {
 			    }
 				break;
 			case "HeapSort":
-				save("src\\Image Solution Folder\\HeapSort_imagesolution_"+Serial_number.serialno()+".png" );
+				save("..\\Image Solution Folder\\HeapSort_imagesolution_"+Serial_number.serialno()+".png" );
 			    Visualize.terminate=false;
 			     
 			    if(Serial_number.increment()>=required_num){
