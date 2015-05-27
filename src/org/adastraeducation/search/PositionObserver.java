@@ -8,6 +8,6 @@ public interface PositionObserver{
 		
 //	public void setHighlightVertex(int position, int color);
 	
-	public float func(float position);
+	public double func(double position);
     
 }

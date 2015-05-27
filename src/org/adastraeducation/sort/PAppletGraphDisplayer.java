@@ -114,7 +114,7 @@ public class PAppletGraphDisplayer extends PApplet {
 						MergeSort mergedata = new MergeSort(displayer);
 						delay(delaytime);
 						mergedata.start();
-						mergedata.sort(0, arrayLength-1);
+						mergedata.sort();
 						mergedata.finish();
 					}
 				};
