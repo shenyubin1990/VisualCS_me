@@ -3,12 +3,8 @@ package org.adastraeducation.sort;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 
-import org.adastraeducation.util.Generate_random_number;
 import org.adastraeducation.util.Serial_number;
 import org.adastraeducation.util.SetArray;
 import org.adastraeducation.visualize.Visualize;
@@ -17,7 +13,7 @@ import org.adastraeducation.visualize.Visualize;
 //does the text solution contain the original question?
 public class MergeSort {
 	public int[] data;
-	public static ArrayDisplayer x;
+	public ArrayDisplayer x;
 	public static int arrayLength = 10;
 	
 	public MergeSort(ArrayDisplayer a) {
@@ -28,27 +24,43 @@ public class MergeSort {
 		//int[] data = new int[] { 5, 3, 6, 2, 1, 9, 4, 8, 7 };
 		SetArray randomArray = new SetArray(arrayLength); 
 		MergeSort a = new MergeSort(new TextArrayDisplayer(randomArray.data));
-		a.print(x.data);
 		a.start();
-		a.sort();
-		
+		a.sort(0, arrayLength-1);
 	}
 	
-	public void sort() {
-		for (int width = 1; width < arrayLength; width = width * 2) {
-//			System.out.println(width);
-			for (int i = 0; i < arrayLength; i += width * 2) {
-				merge(i, Math.min(i+width, arrayLength), Math.min(i+2*width, arrayLength));
-			}
-			print(x.data);
-			textSolution();
-		}
+	public void sort(int left, int right) {
+		if (left >= right)
+			return;
+		for (int i = left; i <= right; i++)
+			x.setHighlightVertex(i, 0);
+		// 找出中间索引
+		int center = (left + right) / 2;
+		// 对左边数组进行递归
+		for (int i = left; i <= center; i++)
+			x.setHighlightVertex(i, 1);
+		x.display();
+		sort(left, center);
+
+		for (int i = center+1; i <= right; i++)
+			x.setHighlightVertex(i, 1);
+		// 对右边数组进行递归
+		x.display();
+		sort(center + 1, right);
+		
+		// 合并
+		merge(x, left, center, right);
+		for (int i = left; i <= right; i++ )
+			x.setHighlightVertex(i, 2);	//2 = red
+		x.display();
+		print(x.data);
+		textSolution();
+
 	}
 	
 	public void textSolution() {
 		try{
 //			PrintStream out = new PrintStream(new FileOutputStream("MergeSort_textsoulution_"+Serial_number.serialno()+".txt"));
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("..\\MergeSort_textsoulution_"+Serial_number.serialno()+".txt"), true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("MergeSort_textsoulution_"+Serial_number.serialno()+".txt"), true));
 
 			for (int i = 0; i < x.data.length; i++) {
 				writer.write(x.data[i] + "\t");
@@ -61,28 +73,27 @@ public class MergeSort {
 				e.printStackTrace();
 			}    
 	}
-	
-	//what we merge is [left to center-1] and [center to right-1]
-	public void merge(int left, int center, int right) {
-		// temp array for record merge result
-		if (center == right)
-			return;
+	public void merge(ArrayDisplayer x, int left, int center, int right) {
+		// 临时数组
 		x.tempArr = null;
 		x.createTempArr(x.data.length);
-		x.right = center;	//the iterator of the right array 
-		int third = left;	//the iterator of the temp array
-		x.left = left;	//the iterator of the left array
-		int tmp = left;		//the head of temp array for copy back 
+		//int[] tmpArr = new int[x.data.length];
+		// 右数组第一个元素索引
+		x.right = center + 1;
+		// third 记录临时数组的索引
+		int third = left;
+		// 缓存左数组第一个元素的索引
+		x.left = left;
+		int tmp = left;
 		
-
-		for (int i = left; i < right; i++) {
-			x.setHighlightVertex2(i, 1);
-			x.setHighlightVertex(i, 1);
-		}
-		x.display();
+		for (int i = 0; i < x.data.length; i++)
+			x.highlightvertex2[i] = 0;
+		for (int i = left; i <= right; i++)
+			x.highlightvertex2[i] = 1;
+		print(x.highlightvertex2);
 		
-		while (x.left < center && x.right < right) {
-			// choose the min one
+		while (x.left <= center && x.right <= right) {
+			// 从两个数组中取出最小的放入临时数组
 			if (x.compare(x.left, x.right) <= 0) {
 				x.tempArr[third++] = x.data[x.left];
 				x.display();
@@ -93,14 +104,14 @@ public class MergeSort {
 				x.right++;
 			}
 		}
-		//now one iterator has gone to the end, the following two while will deal with the other iterator
-		while (x.right < right) {
+		// 剩余部分依次放入临时数组（实际上两个while只会执行其中一个）
+		while (x.right <= right) {
 			x.left = -1;
 			x.tempArr[third++] = x.data[x.right];
 			x.display();
 			x.right++;
 		}
-		while (x.left < center && x.left != -1) {	//remove the influence by previous while loop
+		while (x.left <= center && x.left != -1) {	//remove the influence by previous while loop
 			x.right = -1;
 			x.tempArr[third++] = x.data[x.left];
 			x.display();
@@ -108,19 +119,11 @@ public class MergeSort {
 		}
 		x.left = -1;
 		x.right = -1;
-		x.display();
-
-		// copy the temp array back to the original one
-		while (tmp < right) {
-			x.setHighlightVertex(tmp, 2);
+		// 将临时数组中的内容拷贝回原数组中
+		// （原left-right范围的内容被复制回原数组）
+		while (tmp <= right) {
 			x.data[tmp] = x.tempArr[tmp++];
 		}
-		x.display();
-
-//		print(x.data);
-
-		for (int i = 0; i < x.data.length; i++)
-			x.setHighlightVertex2(i, 0);
 	}
 
 	public void print(int[] data) {
@@ -131,7 +134,7 @@ public class MergeSort {
 	}
 	public void start() {
 		try {
-			File file = new File("..\\MergeSort_textsoulution_"+Serial_number.serialno()+".txt");
+			File file = new File("MergeSort_textsoulution_"+Serial_number.serialno()+".txt");
 			if(!file.exists())
 				file.createNewFile();
 			else 

@@ -1,7 +1,5 @@
 package org.adastraeducation.sort;
 
-import org.adastraeducation.util.SetArray;
-
 
 public abstract class ArrayDisplayer implements ArrayObserver {
 	public int[] data;
